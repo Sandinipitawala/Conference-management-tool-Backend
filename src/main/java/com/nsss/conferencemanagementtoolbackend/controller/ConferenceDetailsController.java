@@ -24,6 +24,7 @@ public class ConferenceDetailsController {
     @Autowired
     private FormConferenceDetailsService formConferenceDetailsService;
 
+    //creating the conference details
     @PostMapping("/conferenceDetails")
     public ResponseEntity<ConferenceDetails> createConferenceDetails(@RequestBody ConferenceDetails conferenceDetails) {
         try {
@@ -33,6 +34,8 @@ public class ConferenceDetailsController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //retrieve all the conference details
     @GetMapping("/conferenceDetails")
     public ResponseEntity<List<ConferenceDetails>> getAllConferenceDetails(@RequestParam(required = false) String name) {
         try {
@@ -52,6 +55,8 @@ public class ConferenceDetailsController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //retrieve conference details by a specific ID
     @GetMapping("/conferenceDetails/{id}")
     public ResponseEntity<ConferenceDetails> getConferenceDetailsById(@PathVariable("id") String id) {
         Optional<ConferenceDetails> conferenceDetailsData = conferenceDetailsRepository.findById(id);
@@ -62,6 +67,8 @@ public class ConferenceDetailsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    //update the conference details
     @PutMapping("/conferenceDetails/{id}")
     public ResponseEntity<ConferenceDetails> updateConferenceDetails(@PathVariable("id") String id, @RequestBody ConferenceDetails conferenceDetails) {
         Optional<ConferenceDetails> conferenceDetailsData = conferenceDetailsRepository.findById(id);
@@ -81,6 +88,8 @@ public class ConferenceDetailsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    //update conference details as approved or rejected
     @PutMapping("/conferenceDetails/{id}/approval")
     public ResponseEntity<ResponseMessage> updateFormConferenceDetailsApproval(@PathVariable String id) {
         ConferenceDetails conferenceDetails = formConferenceDetailsService.getFile(id);
@@ -97,6 +106,8 @@ public class ConferenceDetailsController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
         }
     }
+
+    //delete a conference within a specific id
     @DeleteMapping("/conferenceDetails/{id}")
     public ResponseEntity<HttpStatus> deleteConferenceDetails(@PathVariable("id") String id) {
         try {
